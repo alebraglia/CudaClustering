@@ -1,6 +1,11 @@
 #pragma once
 
 #include "isegmentation.hpp"
+#include <sensor_msgs/msg/point_cloud2.hpp>
+#include <pcl_conversions/pcl_conversions.h>
+#include <pcl/point_types.h>
+#include <pcl/PointIndices.h>
+#include <cuda_runtime.h>
 #include <cstddef>
 
 typedef struct

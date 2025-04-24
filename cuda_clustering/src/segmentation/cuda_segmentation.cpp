@@ -3,7 +3,6 @@
 #include <pcl/sample_consensus/sac_model_plane.h> // Include modello piano
 #include <cuda_runtime.h>                         // API CUDA runtime
 #include <vector>                                 // std::vector
-#include <iostream>                               // std::cout
 
 // Costruttore: inizializza parametri di default e puntatori a nullptr
 CudaSegmentation::CudaSegmentation()
