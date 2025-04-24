@@ -1,4 +1,5 @@
 #include "cuda_clustering/filtering/cuda_filtering.hpp"
+#include <stdlib.h>
 CudaFilter::CudaFilter()
 {
   FilterType_t type = PASSTHROUGH;
@@ -69,16 +70,19 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr CudaFilter::filterPoints(pcl::PointCloud<pcl
   std::cout << "CUDA PassThrough before filtering: " << nCount << std::endl;
   std::cout << "CUDA PassThrough after filtering: " << countLeft << std::endl;
 
-  pcl::PointCloud<pcl::PointXYZ>::Ptr cloudNew(new pcl::PointCloud<pcl::PointXYZ>);
-  cloudNew->width = countLeft;
-  cloudNew->height = 1;
-  cloudNew->points.resize(cloudNew->width * cloudNew->height);
+  //
+  
+  unsigned int dimension = sizeof(float) * 4 * nCount;
+  unsigned int cut_dim = dimension - dimension/4;
+  
+  float *seg_o_ne = malloc(sizeof(float) * cut_dim);
 
-  for (std::size_t i = 0; i < cloudNew->size(); ++i)
+  for (std::size_t i = 0; i < dimension; ++i)
   {
-      cloudNew->points[i].x = output[i*4+0];
-      cloudNew->points[i].y = output[i*4+1];
-      cloudNew->points[i].z = output[i*4+2];
+      seg_o_ne[i] = output[i*4];
+      seg_o_ne[i+1] = output[i*4+1];
+      seg_o_ne[i+2] = output[i*4+2];
   }
   return cloudNew;
+  //
 }

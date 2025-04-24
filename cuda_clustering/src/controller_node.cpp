@@ -86,6 +86,8 @@ void ControllerNode::scanCallback(sensor_msgs::msg::PointCloud2::SharedPtr sub_c
         this->filtered_cp_pub->publish(filteredPc);
     }
 
+    
+
     //RCLCPP_INFO(this->get_logger(), "-------------- CUDA lib -----------");
     this->clustering->extractClusters(pcl_cloud, cones);
     //RCLCPP_INFO(this->get_logger(), "Marker: %ld data points.", cones->points.size());
